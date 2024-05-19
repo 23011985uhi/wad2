@@ -12,4 +12,16 @@ The project in its initial state has a ```Dockerfile``` which creates a single d
 
 ![docker-compose img](https://github.com/23011985uhi/wad2/blob/main/docker%20compose%20yaml.PNG)
 
-The image is from the final iteration but still clearly displays the backend service being defined in the yml file , it shows the directory to get the data from for the container and...
+The image is from the final iteration but still clearly displays the backend service being defined in the ```yml``` file. It shows the directory to get the data for the container, defines the database by name that was already in the previous codebase and installs all dependencies and runs on startup. Since it has an express backend the containers were given a node image as can been see with the ```node: 18-apline``` in the ```yml``` file. The postgresql database was already in use from the initial single container application and so the details had to be included in the ```yml``` file to create the postgresql database contaner separately. All the database functionality was already present in the ```server.js``` file , utilising the username, sequelise, models and routes to initialise the database on startup. This functionality was unaffected by the containerisation of the database and not many changes had to be made to get all 3 containers running and working to provide the same service as the single container application.
+
+## Addition of MongoDb
+
+The addition of a 4th container required it being defined in the ```docker-compose.yml``` file as another service just as the other containers were. The image used will be ```mongo: latest``` , then given a container name so it can be easily identified and then give the default mongodb port of 27017. After this, to move the "Questions" part of the postgresql data to the mongodb a new mongoose schema is required to define the shape of the data. It replaces the sequalise schema in the ```activity.model.js``` file required for postgresql data and looks like this:
+
+![mongoose schema](https://github.com/23011985uhi/wad2/blob/main/mongoose%20schema.PNG)
+
+After this the data can be manually entered into the mongodb database using the docker desktop interface and mongosh, taking care that it has the same format as the schema defined in the code. Then  in the ```server.js``` the project has to connect to the mongodb container using :
+
+![mongodb in server](https://github.com/23011985uhi/wad2/blob/main/mongo%20in%20server.PNG)
+
+Since the model was update to mongose schema the activity.controller.js is now importing the mongoose schema and the question functionality will still work with minimal changes. Now that the mongodb container and database contain the question data, the hardcoded question data within the ```server.js``` can be deleted as it is no longer needed for the postgresql part of the application. 
