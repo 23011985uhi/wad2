@@ -42,4 +42,4 @@ The final goal of this project was to be able to record question attempts made w
 ![config](https://github.com/23011985uhi/wad2/blob/main/nginxconfig.PNG)
 
 I wanted to display a custom question & answer page rather than the original route for the question link and populate it with the question data. I could not quite figure out how to do this without altering the alevelcomputing codebase or effecting its functionality and my attempts to achieve this have been removed from the code due to cleaning. I added the login function required to access the iframe through iwtsc as I wanted to tie the question attempt result to the user similar to the iwtsc question format but again did not finish. 
-
+I think I was struggling mainly with the lack of visual representation for containers and data contained within. As someone whos only done mostly frontend previously it was hard to understand data manipulation and migration without many visual cues or help. 
