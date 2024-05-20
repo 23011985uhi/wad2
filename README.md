@@ -1,5 +1,5 @@
-**Video Link**
-Instructions on setup and start of docker containers
+**[Video Link](https://screenrec.com/share/n5mpQTuk8Z)**
+This is a link to the video demonstration
 
 
 ## Introduction
