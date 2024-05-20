@@ -1,0 +1,89 @@
+version: '3.8'
+networks:
+  test-network:
+    external: true
+
+services:
+  backend:
+    networks:
+      - "test-network"
+          
+    image: node:18-alpine
+    container_name: app_backend
+    working_dir: /app
+    volumes:
+      - ./Server:/app
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: testdb
+    command: sh -c "npm install && npm run start"
+    depends_on:
+      - db
+      - mongodb
+
+  frontend:
+    networks:
+      - "test-network"
+          
+    image: node:18-alpine
+    container_name: app_frontend
+    working_dir: /app
+    volumes:
+      - ./Client:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run start"
+
+  db:
+    networks:
+      - "test-network"
+          
+    image: postgres:latest
+    container_name: app_db
+    volumes:
+      - wad2assignment1_postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  mongodb:
+    networks:
+      - "test-network"
+         
+    image: mongo:latest
+    container_name: app_mongodb
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: mongodb
+
+  nginx:
+    networks:
+      - "test-network"
+    image: nginx:latest
+    container_name: app_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  
+  mongodb_data:
+  wad2assignment1_postgres_data:
+    external: true
+  #postgres_data: if creating a new volume
