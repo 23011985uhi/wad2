@@ -4,7 +4,7 @@ Instructions on setup and start of docker containers
 
 ## Introduction
 
-This project consisted of 3 main parts with each part having its own section within this report. The first part consisted of breaking down a "monolithic" app into 3 microservices within docker, consisting of the frontend, backend and the postgresql database. For the next step the postgresql data had to be split with some of the data being stored in a mongodb database in a separate container, resulting in 4 total containers with the original functionality of the app still in effect. The last part of the project involves cross functionality between this now 4 container app and a different single container app while not impacting the performance of either app.
+This project consisted of 3 main parts with each part having its own section within this report. The first part consisted of breaking down a "monolithic" app (iwtsc) into 3 microservices within docker, consisting of the frontend, backend and the postgresql database. For the next step the postgresql data had to be split with some of the data being stored in a mongodb database in a separate container, resulting in 4 total containers with the original functionality of the app still in effect. The last part of the project involves cross functionality between this now 4 container app (iwtsc) and a different single container app (alevelcomputing) while not impacting the performance of either app.
 
 ## Monolith to microservices
 
@@ -12,7 +12,7 @@ The project in its initial state has a ```Dockerfile``` which creates a single d
 
 ![docker-compose img](https://github.com/23011985uhi/wad2/blob/main/docker%20compose%20yaml.PNG)
 
-The image is from the final iteration but still clearly displays the backend service being defined in the ```yml``` file. It shows the directory to get the data for the container, defines the database by name that was already in the previous codebase and installs all dependencies and runs on startup. Since it has an express backend the containers were given a node image as can been see with the ```node: 18-apline``` in the ```yml``` file. The postgresql database was already in use from the initial single container application and so the details had to be included in the ```yml``` file to create the postgresql database contaner separately. All the database functionality was already present in the ```server.js``` file , utilising the username, sequelise, models and routes to initialise the database on startup. This functionality was unaffected by the containerisation of the database and not many changes had to be made to get all 3 containers running and working to provide the same service as the single container application.
+The image is from the final iteration but still clearly displays the backend service being defined in the ```yml``` file. It shows the directory to get the data for the container, defines the database by name that was already in the previous codebase and installs all dependencies and runs on startup. Since it has an express backend the containers were given a node image as can been see with the ```node: 18-apline``` in the ```yml``` file. The postgresql database was already in use from the initial single container application and so the details had to be included in the ```yml``` file to create the postgresql database container separately. All the database functionality was already present in the ```server.js``` file , utilising the username, sequelise, models and routes to initialise the database on startup. This functionality was unaffected by the containerisation of the database and not many changes had to be made to get all 3 containers running and working to provide the same service as the single container application.
 
 ## Addition of MongoDb
 
@@ -34,3 +34,12 @@ The last part of the project was to allow access to the alevelcomputing containe
 ![network image](https://github.com/23011985uhi/wad2/blob/main/network.PNG)
 
 Next an Nginx container was created by adding Nginx as a service to the ```docker-compose``` file with an image of ```nginx:latest``` to define it. The Nginx container was then added to the docker network so that all containers would be able to interact with one another. The alevelcomputing app was made accessible through the Iwtsc by the use of an iframe which was activated through a link on the navbar. When accessed through iwtsc the alevelcomputing content requires a login user details while when accessed on its own port it does not require any form of login. 
+
+## Un-achieved goals and personal review
+
+The final goal of this project was to be able to record question attempts made within the iframe of alevelcomputing through iwtsc using nginx as a reverse proxy. I was able to setup nginx and a default config which I thought was connecting the iwtsc frontend to the alevelcomputing backend when the link for each question was clicked within the iframe.
+
+![config](https://github.com/23011985uhi/wad2/blob/main/nginxconfig.PNG)
+
+I wanted to display a custom question & answer page rather than the original route for the question link and populate it with the question data. I could not quite figure out how to do this without altering the alevelcomputing codebase or effecting its functionality and my attempts to achieve this have been removed from the code due to cleaning. I added the login function required to access the iframe through iwtsc as I wanted to tie the question attempt result to the user similar to the iwtsc question format but again did not finish. 
+
