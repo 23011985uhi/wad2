@@ -8,7 +8,7 @@ This project consisted of 3 main parts with each part having its own section wit
 
 ## Monolith to microservices
 
-The project in its initial state has a ```Dockerfile``` which creates a single docker container as an ubuntu image. The first step was to create a ```docker-compose.yml``` file that would handle the creation of the containers and turn the project into a mutli container application. In the ```yml``` file the services can be defined to separate what is in each container and how the frontend, backend and postgresql database will be defined.
+The project in its initial state has a ```Dockerfile``` which creates a single docker container as an ubuntu image. The first step was to create a ```docker-compose.yml``` file that would handle the creation of the containers and turn the project into a mutli container application. In the ```yml``` file the containers for frontend, backend and postgresql database are defined as separate services and given their own port numbers. 
 
 ![docker-compose img](https://github.com/23011985uhi/wad2/blob/main/docker%20compose%20yaml.PNG)
 
